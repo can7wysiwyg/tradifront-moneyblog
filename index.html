@@ -54,21 +54,23 @@
     </nav>
 
 
+        
         <!-- Hero Article -->
-    <div class="container">
-        <div class="hero-article" id="hero-article">
+    <div class="container mt-4">
+        <div class="hero-article" id="hero-article" style="display: none;">
             <div class="container hero-content">
                 <div class="row">
                     <div class="col-lg-8">
                         <span class="badge bg-danger mb-2">FEATURED</span>
-                        <h1 class="hero-title" id="hero-title">Breaking: Revolutionary Discovery Changes Everything We Know</h1>
-                        <p class="hero-excerpt" id="hero-excerpt">
-                            Scientists at leading research institutions have made a groundbreaking discovery that promises to revolutionize our understanding of the natural world and open new possibilities for the future.
-                        </p>
+                        <h1 class="hero-title" id="hero-title"></h1>
+                          <div id="hero-image">
+
+                          </div>
+                        <p class="hero-excerpt" id="hero-excerpt"></p>
                         <div class="hero-meta">
-                            <span><i class="fas fa-user"></i> <span id="hero-author">Dr. Sarah Johnson</span></span>
-                            <span class="mx-3"><i class="fas fa-clock"></i> <span id="hero-time">30 minutes ago</span></span>
-                            <span><i class="fas fa-eye"></i> <span id="hero-views">12,847</span> views</span>
+                            <span><i class="fas fa-user"></i> <span id="hero-author">News Team</span></span>
+                            <span><i class="fas fa-clock"></i> <span id="hero-time"></span></span>
+                            <span><i class="fas fa-eye"></i> <span id="hero-views"></span> views</span>
                         </div>
                     </div>
                 </div>
@@ -76,125 +78,51 @@
         </div>
     </div>
 
+    
+    <div id="loading" class="loading">
+        <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
+        <p>Loading news articles...</p>
+    </div>
 
-        <!-- Main Content -->
-    <div class="container mt-4">
+    
+    <div id="error" class="container" style="display: none;">
+        <div class="error">
+            <i class="fas fa-exclamation-triangle"></i>
+            Failed to load articles. Please try again later.
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container" id="main-content" style="display: none;">
         <div class="row">
             <!-- Main Content Column -->
             <div class="col-lg-8">
-                <!-- Lead Story -->
-                <div class="lead-story" id="lead-story">
-                    <div class="story-image-placeholder">
-                        <div>
-                            <i class="fas fa-image fa-3x mb-2"></i><br>
-                            Lead Story Image<br>
-                            <small>600x300px</small>
-                        </div>
-                    </div>
-                    <h2 class="story-headline" id="lead-headline">Revolutionary Solar Technology Promises 90% Efficiency Rate</h2>
-                    <p class="story-excerpt" id="lead-excerpt">
-                        Scientists at the International Energy Research Institute have unveiled a groundbreaking solar panel design that achieves unprecedented efficiency rates. The new photovoltaic cells utilize advanced quantum dot technology to capture and convert sunlight with remarkable precision, potentially revolutionizing the renewable energy landscape.
-                    </p>
-                    <div class="story-meta">
-                        <span><i class="fas fa-user"></i> By <span id="lead-author">Sarah Chen</span>, Science Reporter</span>
-                        <span><i class="fas fa-clock"></i> <span id="lead-time">2 hours ago</span></span>
-                    </div>
-                </div>
+                
+                <div class="lead-story" id="lead-story" style="display: none;">
+    <div class="story-image-container" id="story-image-container">
+    
+        <div class="story-image-placeholder" id="story-image-placeholder">
 
-                <!-- World News Section -->
-                <h3 class="section-header">World News</h3>
-                <div class="row" id="world-news-grid">
-                    <div class="col-md-6">
-                        <div class="story-card" data-story-id="world-1">
-                            <div class="story-image-placeholder">
-                                <div>
-                                    <i class="fas fa-globe fa-2x mb-2"></i><br>
-                                    World News Image<br>
-                                    <small>400x200px</small>
-                                </div>
-                            </div>
-                            <h4 class="story-headline" data-field="headline">Global Climate Summit Reaches Historic Agreement</h4>
-                            <p class="story-excerpt" data-field="excerpt">World leaders unite on ambitious carbon reduction targets as scientists warn of critical tipping points...</p>
-                            <div class="story-meta">
-                                <span><i class="fas fa-map-marker-alt"></i> <span data-field="location">Geneva</span></span>
-                                <span><i class="fas fa-clock"></i> <span data-field="time">4 hours ago</span></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="story-card" data-story-id="world-2">
-                            <div class="story-image-placeholder">
-                                <div>
-                                    <i class="fas fa-robot fa-2x mb-2"></i><br>
-                                    Tech News Image<br>
-                                    <small>400x200px</small>
-                                </div>
-                            </div>
-                            <h4 class="story-headline" data-field="headline">Tech Giants Announce AI Safety Initiative</h4>
-                            <p class="story-excerpt" data-field="excerpt">Major technology companies collaborate on comprehensive artificial intelligence safety protocols...</p>
-                            <div class="story-meta">
-                                <span><i class="fas fa-map-marker-alt"></i> <span data-field="location">Silicon Valley</span></span>
-                                <span><i class="fas fa-clock"></i> <span data-field="time">6 hours ago</span></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        </div>
+    </div>
+    <div class="story-content">
+        <h2 class="story-headline" id="lead-headline"></h2>
+        <p class="story-excerpt" id="lead-excerpt"></p>
+        <div class="story-meta">
+            <span><i class="fas fa-user"></i> By <span id="lead-author">News Team</span></span>
+            <span><i class="fas fa-clock"></i> <span id="lead-time"></span></span>
+            <span><i class="fas fa-eye"></i> <span id="lead-views"></span> views</span>
+        </div>
+    </div>
+</div>
 
-                <!-- Business Section -->
-                <h3 class="section-header" id="business">Business</h3>
-                <div class="story-card" data-story-id="business-1">
-                    <div class="story-image-placeholder">
-                        <div>
-                            <i class="fas fa-chart-bar fa-2x mb-2"></i><br>
-                            Business News Image<br>
-                            <small>600x200px</small>
-                        </div>
-                    </div>
-                    <h4 class="story-headline" data-field="headline">Markets Surge Following Federal Reserve Decision</h4>
-                    <p class="story-excerpt" data-field="excerpt">Stock markets around the world experienced significant gains after the Federal Reserve announced a surprise policy adjustment, boosting investor confidence across multiple sectors including technology, healthcare, and renewable energy.</p>
-                    <div class="story-meta">
-                        <span><i class="fas fa-chart-line"></i> <span data-field="category">Markets</span></span>
-                        <span><i class="fas fa-clock"></i> <span data-field="time">3 hours ago</span></span>
-                    </div>
-                </div>
 
-                <!-- Sports Section -->
-                <h3 class="section-header" id="sports">Sports</h3>
-                <div class="row" id="sports-grid">
-                    <div class="col-md-6">
-                        <div class="story-card" data-story-id="sports-1">
-                            <div class="story-image-placeholder">
-                                <div>
-                                    <i class="fas fa-trophy fa-2x mb-2"></i><br>
-                                    Sports Image<br>
-                                    <small>400x200px</small>
-                                </div>
-                            </div>
-                            <h4 class="story-headline" data-field="headline">Championship Final Set for This Weekend</h4>
-                            <p class="story-excerpt" data-field="excerpt">Two powerhouse teams prepare for what promises to be an epic showdown...</p>
-                            <div class="story-meta">
-                                <span><i class="fas fa-trophy"></i> <span data-field="category">Sports</span></span>
-                                <span><i class="fas fa-clock"></i> <span data-field="time">5 hours ago</span></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="story-card" data-story-id="sports-2">
-                            <div class="story-image-placeholder">
-                                <div>
-                                    <i class="fas fa-medal fa-2x mb-2"></i><br>
-                                    Olympics Image<br>
-                                    <small>400x200px</small>
-                                </div>
-                            </div>
-                            <h4 class="story-headline" data-field="headline">Olympic Training Facilities Unveiled</h4>
-                            <p class="story-excerpt" data-field="excerpt">State-of-the-art training centers open ahead of next year's games...</p>
-                            <div class="story-meta">
-                                <span><i class="fas fa-medal"></i> <span data-field="category">Olympics</span></span>
-                                <span><i class="fas fa-clock"></i> <span data-field="time">7 hours ago</span></span>
-                            </div>
-                        </div>
-                    </div>
+
+
+
+                <!-- Articles Grid -->
+                <div id="articles-container">
+                    <!-- Articles will be populated here -->
                 </div>
 
                 <!-- Advertisement Space -->
@@ -246,6 +174,9 @@
             </div>
         </div>
     </div>
+
+
+
 
     <!-- Footer -->
     <footer class="footer">
