@@ -12,7 +12,7 @@ function shuffleArray(array) {
 let currentPage = 1;
 const categoriesPerPage = 5;
 const articlesPerCategory = 6;
-const totalArticlesPerPage = categoriesPerPage * articlesPerCategory; // 25 articles per page
+const totalArticlesPerPage = categoriesPerPage * articlesPerCategory; 
 let allArticles = [];
 let categories = [];
 let organizedByCategory = {};
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const mainContent = document.getElementById("main-content");
     
     try {
-        // Fetch categories
+    
         const categoriesResponse = await fetch(`${API_URL}/public/categories`, {
             method: "GET",
             headers: { "Content-Type": "application/json" }
@@ -87,14 +87,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             throw new Error("No articles found");
         }
         
-        // Store all articles and organize them by category
+        
         allArticles = articles;
         organizedByCategory = organizeArticlesByCategory(articles);
         
         loading.style.display = "none";
         mainContent.style.display = "block";
         
-        // Display articles with pagination
+        
         populateArticlesWithPagination();
         
     } catch (err) {
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 function organizeArticlesByCategory(articles) {
     const organizedSections = {};
     
-    // Group articles by category
+    
     articles.forEach(article => {
         const categoryName = getCategoryName(article.catId);
         if (!organizedSections[categoryName]) {
@@ -116,7 +116,7 @@ function organizeArticlesByCategory(articles) {
         organizedSections[categoryName].push(article);
     });
     
-    // Shuffle articles within each category
+    
     Object.keys(organizedSections).forEach(category => {
         organizedSections[category] = shuffleArray(organizedSections[category]);
     });
@@ -133,7 +133,7 @@ function getPageData(pageNumber) {
         return { categories: {}, totalPages };
     }
     
-    // Calculate which categories to show on this page
+
     const startCategoryIndex = (pageNumber - 1) * categoriesPerPage;
     const endCategoryIndex = Math.min(startCategoryIndex + categoriesPerPage, totalCategories);
     
@@ -143,7 +143,7 @@ function getPageData(pageNumber) {
         const categoryName = categoryNames[i];
         const categoryArticles = organizedByCategory[categoryName];
         
-        // Limit to 5 articles per category
+        
         pageCategories[categoryName] = categoryArticles.slice(0, articlesPerCategory);
     }
     
@@ -153,44 +153,43 @@ function getPageData(pageNumber) {
 function populateArticlesWithPagination() {
     const { categories: pageCategories, totalPages } = getPageData(currentPage);
     
-    // Get all articles from current page
+    
     let allPageArticles = [];
     Object.values(pageCategories).forEach(categoryArticles => {
         allPageArticles.push(...categoryArticles);
     });
     
-    // Find featured articles from ALL articles (not just current page)
+    
     const featuredArticles = allArticles.filter(article => 
         article.featured === true || article.mainArticle === true
     );
     
     let heroArticle = null;
     
-    // If we have featured articles, randomly select one
+    
     if (featuredArticles.length > 0) {
         const randomIndex = Math.floor(Math.random() * featuredArticles.length);
         heroArticle = featuredArticles[randomIndex];
     } else {
-        // Fallback: look for mainArticle in current page articles
+        
         heroArticle = allPageArticles.find(article => article.mainArticle === true);
     }
     
-    // Populate hero article if found
+    
     if (heroArticle) {
         populateHeroArticle(heroArticle);
-        // Remove hero article from categories to avoid duplication
-        Object.keys(pageCategories).forEach(categoryName => {
+            Object.keys(pageCategories).forEach(categoryName => {
             pageCategories[categoryName] = pageCategories[categoryName].filter(
                 article => article._id !== heroArticle._id
             );
         });
     }
     
-    // Handle lead story if no hero article and we have articles
+    
     if (!heroArticle && allPageArticles.length > 0) {
         const leadArticle = allPageArticles[0];
         populateLeadStory(leadArticle);
-        // Remove lead article from categories
+        
         Object.keys(pageCategories).forEach(categoryName => {
             const articleIndex = pageCategories[categoryName].findIndex(
                 article => article._id === leadArticle._id
@@ -202,10 +201,10 @@ function populateArticlesWithPagination() {
         });
     }
     
-    // Populate articles grid
+    
     populateArticlesGrid(pageCategories);
     
-    // Update pagination controls
+    
     updatePaginationControls(totalPages);
 }
 
@@ -226,15 +225,14 @@ function updatePaginationControls(totalPages) {
     
     paginationContainer.style.display = 'block';
     
-    // Calculate total articles for current page
+    
     const { categories: pageCategories } = getPageData(currentPage);
     let totalArticlesOnPage = 0;
     Object.values(pageCategories).forEach(categoryArticles => {
         totalArticlesOnPage += categoryArticles.length;
     });
     
-    // Calculate article range
-    const totalCategoriesShown = Object.keys(pageCategories).length;
+        const totalCategoriesShown = Object.keys(pageCategories).length;
     const startArticle = ((currentPage - 1) * categoriesPerPage) + 1;
     const endArticle = Math.min(currentPage * categoriesPerPage, Object.keys(organizedByCategory).length);
     
@@ -276,13 +274,13 @@ function generatePageNumbers(current, total) {
 }
 
 function changePage(page) {
-    const { totalPages } = getPageData(1); // Get total pages
+    const { totalPages } = getPageData(1); 
     if (page < 1 || page > totalPages) return;
     
     currentPage = page;
     populateArticlesWithPagination();
     
-    // Scroll to top of main content
+    
     document.getElementById('main-content').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -325,32 +323,31 @@ function populateLeadStory(article) {
     const imageContainer = document.getElementById("story-image-container");
     const placeholder = document.getElementById("story-image-placeholder");
     
-    // Handle image
+    
     if (article?.photo) {
-        // Remove existing image if any
+        
         const existingImg = imageContainer.querySelector('.story-image');
         if (existingImg) {
             existingImg.remove();
         }
         
-        // Create and add new image
+        
         const img = document.createElement('img');
         img.src = article.photo;
         img.alt = article.title || 'Story image';
         img.className = 'story-image';
         img.style.display = 'block';
         
-        // Hide placeholder and show image
+        
         placeholder.style.display = 'none';
         imageContainer.appendChild(img);
         
-        // Handle image load error
-        img.onerror = function() {
+                img.onerror = function() {
             img.style.display = 'none';
             placeholder.style.display = 'flex';
         };
     } else {
-        // No image available, show placeholder
+        
         const existingImg = imageContainer.querySelector('.story-image');
         if (existingImg) {
             existingImg.remove();
@@ -358,22 +355,22 @@ function populateLeadStory(article) {
         placeholder.style.display = 'flex';
     }
     
-    // Populate content
+    
     leadHeadline.textContent = article.title;
     leadExcerpt.textContent = truncateText(article.content, 300);
     leadTime.textContent = formatTime(article.createdAt);
     leadViews.textContent = article.articleClicks || 0;
     
-    // Show the lead story
+    
     leadStory.style.display = "block";
     leadStory.onclick = () => handleArticleClick(article);
 }
 
 function populateArticlesGrid(pageCategories) {
     const container = document.getElementById("articles-container");
-    container.innerHTML = ''; // Clear previous content
+    container.innerHTML = ''; 
     
-    // Display each category section (limited to 5 categories with 6 articles each)
+    
     Object.entries(pageCategories).forEach(([categoryName, categoryArticles]) => {
         if (categoryArticles.length === 0) return;
         
@@ -381,7 +378,7 @@ function populateArticlesGrid(pageCategories) {
         container.innerHTML += sectionHtml;
     });
     
-    // Add click handlers for all articles on the page
+    
     Object.values(pageCategories).forEach(categoryArticles => {
         categoryArticles.forEach(article => {
             const articleElement = document.querySelector(`[data-article-id="${article._id}"]`);
@@ -396,7 +393,7 @@ function createSectionHtml(title, articles) {
     let html = `<h3 class="section-header">${title}</h3>`;
     
     if (articles.length === 1) {
-        // Single article layout
+     
         const article = articles[0];
         html += `
             <div class="story-card" data-article-id="${article._id}">
@@ -405,7 +402,7 @@ function createSectionHtml(title, articles) {
                         <img src="${article.photo || ''}" alt="Article Photo" />
                     </div>
                 </div>
-                <h4 class="story-headline">${article.title}</h4>
+                <h6 class="story-headline">${article.title}</h6>
                 <p class="story-excerpt">${truncateText(article.content, 200)}</p>
                 <div class="story-meta">
                     <span><i class="fas fa-clock"></i> ${formatTime(article.createdAt)}</span>
@@ -425,7 +422,7 @@ function createSectionHtml(title, articles) {
                                 <img src="${article.photo || ''}" alt="Article Photo" />
                             </div>
                         </div>
-                        <h4 class="story-headline">${article.title}</h4>
+                        <h6 class="story-headline">${article.title}</h6>
                         <p class="story-excerpt">${truncateText(article.content, 150)}</p>
                         <div class="story-meta">
                             <span><i class="fas fa-clock"></i> ${formatTime(article.createdAt)}</span>
@@ -479,3 +476,4 @@ function formatTime(dateString) {
     
     return date.toLocaleDateString();
 }
+
