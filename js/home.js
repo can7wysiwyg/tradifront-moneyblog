@@ -364,40 +364,50 @@ function createSectionHtml(title, articles) {
     if (articles.length === 1) {
         const article = articles[0];
         html += `
-            <div class="story-card" data-article-id="${article._id}">
-                <div class="article-images">
-                    <div>
-                        <img src="${article.photo || ''}" alt="Article Photo" />
-                    </div>
-                </div>
-                <h6 class="story-headline">${article.title}</h6>
-                
-                <div class="story-meta">
-                    <span><i class="fas fa-clock"></i> ${formatTime(article.createdAt)}</span>
-                    <span><i class="fas fa-eye"></i> ${article.articleClicks || 0} views</span>
-                </div>
-            </div>
-        `;
-    } else {
-        html += '<div class="row">';
-        articles.forEach(article => {
-            html += `
-                <div class="col-md-6">
-                    <div class="story-card" data-article-id="${article._id}">
-                        <div class="article-images">
+            <div class="article-card" data-article-id="${article._id}">
+                        <div>
                             <div>
-                                <img src="${article.photo || ''}" alt="Article Photo" />
+                                <img src="${article.photo || ''}" alt="Article Photo" class="card-image" />
                             </div>
                         </div>
-                        <h6 class="story-headline">${article.title}</h6>
+                        <div class="card-content">
+                        <h6 class="card-title">${article.title}</h6>
                         
                         <div class="story-meta">
                             <span><i class="fas fa-clock"></i> ${formatTime(article.createdAt)}</span>
                             <span><i class="fas fa-eye"></i> ${article.articleClicks || 0} views</span>
                         </div>
+
+                        </div>
+                    </div>
+
+        `;
+    } else {
+        html += '<div class="row">';
+        articles.forEach(article => {
+            html += `
+            <div class="col-md-6">
+                    <div class="article-card" data-article-id="${article._id}">
+                        <div>
+                            <div>
+                                <img src="${article.photo || ''}" alt="Article Photo" class="card-image" />
+                            </div>
+                        </div>
+                        <div class="card-content">
+                        <h6 class="card-title">${article.title}</h6>
+                        
+                        <div class="story-meta">
+                            <span><i class="fas fa-clock"></i> ${formatTime(article.createdAt)}</span>
+                            <span><i class="fas fa-eye"></i> ${article.articleClicks || 0} views</span>
+                        </div>
+
+                        </div>
                     </div>
                 </div>
-            `;
+
+ 
+
+                            `;
         });
         html += '</div>';
     }
