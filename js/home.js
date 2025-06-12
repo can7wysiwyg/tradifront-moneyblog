@@ -1,14 +1,3 @@
-
-
-function shuffleArray(array) {
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
-}
-
 let currentPage = 1;
 const categoriesPerPage = 5;
 const articlesPerCategory = 6;
@@ -28,7 +17,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const mainContent = document.getElementById("main-content");
     
     try {
-    
         const categoriesResponse = await fetch(`${API_URL}/public/categories`, {
             method: "GET",
             headers: { "Content-Type": "application/json" }
@@ -65,7 +53,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const secondVisitArticlesData = await secondVisitArticles.json();
             const allSecondVisitArticles = secondVisitArticlesData.articles || [];
             
-            articles = shuffleArray(allSecondVisitArticles);
+            // Articles are already shuffled from backend, no need to shuffle again
+            articles = allSecondVisitArticles;
             
         } else {
             const firstVisitArticles = await fetch(`${API_URL}/public/show-articles`, {
@@ -80,20 +69,19 @@ document.addEventListener("DOMContentLoaded", async () => {
             const firstVisitData = await firstVisitArticles.json();
             const allFirstVisitArticles = firstVisitData.articles || [];
             
-            articles = shuffleArray(allFirstVisitArticles);
+            // Articles are already shuffled from backend, no need to shuffle again
+            articles = allFirstVisitArticles;
         }
         
         if (articles.length === 0) {
             throw new Error("No articles found");
         }
         
-        
         allArticles = articles;
         organizedByCategory = organizeArticlesByCategory(articles);
         
         loading.style.display = "none";
         mainContent.style.display = "block";
-        
         
         populateArticlesWithPagination();
         
@@ -107,7 +95,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 function organizeArticlesByCategory(articles) {
     const organizedSections = {};
     
-    
+    // Group articles by category
     articles.forEach(article => {
         const categoryName = getCategoryName(article.catId);
         if (!organizedSections[categoryName]) {
@@ -116,9 +104,12 @@ function organizeArticlesByCategory(articles) {
         organizedSections[categoryName].push(article);
     });
     
-    
+    // Articles within each category are already mixed from the backend shuffle
+    // But we can add an additional shuffle per category if needed for more randomness
     Object.keys(organizedSections).forEach(category => {
-        organizedSections[category] = shuffleArray(organizedSections[category]);
+        // Optional: Add local shuffle for each category
+        // organizedSections[category] = shuffleArray(organizedSections[category]);
+        // For now, keeping the backend shuffle order
     });
     
     return organizedSections;
@@ -133,7 +124,6 @@ function getPageData(pageNumber) {
         return { categories: {}, totalPages };
     }
     
-
     const startCategoryIndex = (pageNumber - 1) * categoriesPerPage;
     const endCategoryIndex = Math.min(startCategoryIndex + categoriesPerPage, totalCategories);
     
@@ -142,7 +132,6 @@ function getPageData(pageNumber) {
     for (let i = startCategoryIndex; i < endCategoryIndex; i++) {
         const categoryName = categoryNames[i];
         const categoryArticles = organizedByCategory[categoryName];
-        
         
         pageCategories[categoryName] = categoryArticles.slice(0, articlesPerCategory);
     }
@@ -153,12 +142,10 @@ function getPageData(pageNumber) {
 function populateArticlesWithPagination() {
     const { categories: pageCategories, totalPages } = getPageData(currentPage);
     
-    
     let allPageArticles = [];
     Object.values(pageCategories).forEach(categoryArticles => {
         allPageArticles.push(...categoryArticles);
     });
-    
     
     const featuredArticles = allArticles.filter(article => 
         article.featured === true || article.mainArticle === true
@@ -166,25 +153,21 @@ function populateArticlesWithPagination() {
     
     let heroArticle = null;
     
-    
     if (featuredArticles.length > 0) {
         const randomIndex = Math.floor(Math.random() * featuredArticles.length);
         heroArticle = featuredArticles[randomIndex];
     } else {
-        
         heroArticle = allPageArticles.find(article => article.mainArticle === true);
     }
     
-    
     if (heroArticle) {
         populateHeroArticle(heroArticle);
-            Object.keys(pageCategories).forEach(categoryName => {
+        Object.keys(pageCategories).forEach(categoryName => {
             pageCategories[categoryName] = pageCategories[categoryName].filter(
                 article => article._id !== heroArticle._id
             );
         });
     }
-    
     
     if (!heroArticle && allPageArticles.length > 0) {
         const leadArticle = allPageArticles[0];
@@ -201,10 +184,7 @@ function populateArticlesWithPagination() {
         });
     }
     
-    
     populateArticlesGrid(pageCategories);
-    
-    
     updatePaginationControls(totalPages);
 }
 
@@ -225,14 +205,13 @@ function updatePaginationControls(totalPages) {
     
     paginationContainer.style.display = 'block';
     
-    
     const { categories: pageCategories } = getPageData(currentPage);
     let totalArticlesOnPage = 0;
     Object.values(pageCategories).forEach(categoryArticles => {
         totalArticlesOnPage += categoryArticles.length;
     });
     
-        const totalCategoriesShown = Object.keys(pageCategories).length;
+    const totalCategoriesShown = Object.keys(pageCategories).length;
     const startArticle = ((currentPage - 1) * categoriesPerPage) + 1;
     const endArticle = Math.min(currentPage * categoriesPerPage, Object.keys(organizedByCategory).length);
     
@@ -280,7 +259,6 @@ function changePage(page) {
     currentPage = page;
     populateArticlesWithPagination();
     
-    
     document.getElementById('main-content').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -323,14 +301,11 @@ function populateLeadStory(article) {
     const imageContainer = document.getElementById("story-image-container");
     const placeholder = document.getElementById("story-image-placeholder");
     
-    
     if (article?.photo) {
-        
         const existingImg = imageContainer.querySelector('.story-image');
         if (existingImg) {
             existingImg.remove();
         }
-        
         
         const img = document.createElement('img');
         img.src = article.photo;
@@ -338,16 +313,14 @@ function populateLeadStory(article) {
         img.className = 'story-image';
         img.style.display = 'block';
         
-        
         placeholder.style.display = 'none';
         imageContainer.appendChild(img);
         
-                img.onerror = function() {
+        img.onerror = function() {
             img.style.display = 'none';
             placeholder.style.display = 'flex';
         };
     } else {
-        
         const existingImg = imageContainer.querySelector('.story-image');
         if (existingImg) {
             existingImg.remove();
@@ -355,12 +328,10 @@ function populateLeadStory(article) {
         placeholder.style.display = 'flex';
     }
     
-    
     leadHeadline.textContent = article.title;
     leadExcerpt.textContent = truncateText(article.content, 300);
     leadTime.textContent = formatTime(article.createdAt);
     leadViews.textContent = article.articleClicks || 0;
-    
     
     leadStory.style.display = "block";
     leadStory.onclick = () => handleArticleClick(article);
@@ -370,14 +341,12 @@ function populateArticlesGrid(pageCategories) {
     const container = document.getElementById("articles-container");
     container.innerHTML = ''; 
     
-    
     Object.entries(pageCategories).forEach(([categoryName, categoryArticles]) => {
         if (categoryArticles.length === 0) return;
         
         const sectionHtml = createSectionHtml(categoryName, categoryArticles);
         container.innerHTML += sectionHtml;
     });
-    
     
     Object.values(pageCategories).forEach(categoryArticles => {
         categoryArticles.forEach(article => {
@@ -393,7 +362,6 @@ function createSectionHtml(title, articles) {
     let html = `<h3 class="section-header">${title}</h3>`;
     
     if (articles.length === 1) {
-     
         const article = articles[0];
         html += `
             <div class="story-card" data-article-id="${article._id}">
@@ -411,7 +379,6 @@ function createSectionHtml(title, articles) {
             </div>
         `;
     } else {
-        // Grid layout for multiple articles
         html += '<div class="row">';
         articles.forEach(article => {
             html += `
@@ -476,4 +443,3 @@ function formatTime(dateString) {
     
     return date.toLocaleDateString();
 }
-
