@@ -403,7 +403,7 @@ function createSectionHtml(title, articles) {
                     </div>
                 </div>
                 <h6 class="story-headline">${article.title}</h6>
-                <p class="story-excerpt">${truncateText(article.content, 200)}</p>
+                
                 <div class="story-meta">
                     <span><i class="fas fa-clock"></i> ${formatTime(article.createdAt)}</span>
                     <span><i class="fas fa-eye"></i> ${article.articleClicks || 0} views</span>
@@ -423,7 +423,7 @@ function createSectionHtml(title, articles) {
                             </div>
                         </div>
                         <h6 class="story-headline">${article.title}</h6>
-                        <p class="story-excerpt">${truncateText(article.content, 150)}</p>
+                        
                         <div class="story-meta">
                             <span><i class="fas fa-clock"></i> ${formatTime(article.createdAt)}</span>
                             <span><i class="fas fa-eye"></i> ${article.articleClicks || 0} views</span>
@@ -440,7 +440,7 @@ function createSectionHtml(title, articles) {
 
 function handleArticleClick(article) {
     trackArticleClick(article);
-    window.location.href = `article.html?id=${article._id}`;
+    window.location.href = `article.html#${article._id}`;
 }
 
 async function trackArticleClick(article) {
