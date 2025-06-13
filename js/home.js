@@ -1,3 +1,4 @@
+
 let currentPage = 1;
 const categoriesPerPage = 5;
 const articlesPerCategory = 6;
@@ -5,9 +6,10 @@ const totalArticlesPerPage = categoriesPerPage * articlesPerCategory;
 let allArticles = [];
 let categories = [];
 let organizedByCategory = {};
+ const API_URL = "http://localhost:5000";
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const API_URL = "http://localhost:5000";
+   
     const catId = localStorage.getItem("catId");
     const subCatId = localStorage.getItem("subCatId");
     const keywordParams = JSON.parse(localStorage.getItem("keyword"));
@@ -162,6 +164,7 @@ function populateArticlesWithPagination() {
     
     if (heroArticle) {
         populateHeroArticle(heroArticle);
+        // Remove hero article from categories to avoid duplication
         Object.keys(pageCategories).forEach(categoryName => {
             pageCategories[categoryName] = pageCategories[categoryName].filter(
                 article => article._id !== heroArticle._id
@@ -169,20 +172,8 @@ function populateArticlesWithPagination() {
         });
     }
     
-    if (!heroArticle && allPageArticles.length > 0) {
-        const leadArticle = allPageArticles[0];
-        populateLeadStory(leadArticle);
-        
-        Object.keys(pageCategories).forEach(categoryName => {
-            const articleIndex = pageCategories[categoryName].findIndex(
-                article => article._id === leadArticle._id
-            );
-            if (articleIndex !== -1) {
-                pageCategories[categoryName].splice(articleIndex, 1);
-                return;
-            }
-        });
-    }
+    // Removed the fallback populateLeadStory logic
+    // If no hero article is found, all articles will just appear in the grid
     
     populateArticlesGrid(pageCategories);
     updatePaginationControls(totalPages);
@@ -292,51 +283,6 @@ function populateHeroArticle(article) {
     heroSection.onclick = () => handleArticleClick(article);
 }
 
-// function populateLeadStory(article) {
-//     const leadStory = document.getElementById("lead-story");
-//     const leadHeadline = document.getElementById("lead-headline");
-//     const leadExcerpt = document.getElementById("lead-excerpt");
-//     const leadTime = document.getElementById("lead-time");
-//     const leadViews = document.getElementById("lead-views");
-//     const imageContainer = document.getElementById("story-image-container");
-//     const placeholder = document.getElementById("story-image-placeholder");
-    
-//     if (article?.photo) {
-//         const existingImg = imageContainer.querySelector('.story-image');
-//         if (existingImg) {
-//             existingImg.remove();
-//         }
-        
-//         const img = document.createElement('img');
-//         img.src = article.photo;
-//         img.alt = article.title || 'Story image';
-//         img.className = 'story-image';
-//         img.style.display = 'block';
-        
-//         placeholder.style.display = 'none';
-//         imageContainer.appendChild(img);
-        
-//         img.onerror = function() {
-//             img.style.display = 'none';
-//             placeholder.style.display = 'flex';
-//         };
-//     } else {
-//         const existingImg = imageContainer.querySelector('.story-image');
-//         if (existingImg) {
-//             existingImg.remove();
-//         }
-//         placeholder.style.display = 'flex';
-//     }
-    
-//     leadHeadline.textContent = article.title;
-//     leadExcerpt.textContent = truncateText(article.content, 300);
-//     leadTime.textContent = formatTime(article.createdAt);
-//     leadViews.textContent = article.articleClicks || 0;
-    
-//     leadStory.style.display = "block";
-//     leadStory.onclick = () => handleArticleClick(article);
-// }
-
 function populateArticlesGrid(pageCategories) {
     const container = document.getElementById("articles-container");
     container.innerHTML = ''; 
@@ -422,7 +368,7 @@ function handleArticleClick(article) {
 
 async function trackArticleClick(article) {
     try {
-        await fetch(`http://localhost:5000/public/article-click/${article._id}`, {
+        await fetch(`${API_URL}/public/article-click/${article._id}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         });
