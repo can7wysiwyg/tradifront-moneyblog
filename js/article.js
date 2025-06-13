@@ -46,6 +46,16 @@
             const { article, relatedArticles, categoryArticles } = data;
             const main = document.getElementById('main');
 
+            // console.log("Rendering article", article.catId._id)
+
+            setTimeout(() => {
+                 localStorage.setItem("catId", article.catId._id);
+                 localStorage.setItem("subCatId", article.subCatId);
+                localStorage.setItem("keyword", JSON.stringify(article.articleKeywords || []));
+                
+
+            }, 600)
+
             const html = `
                 <!-- Article Header -->
                 <div class="article-header">
