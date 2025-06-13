@@ -26,6 +26,7 @@ async function NewsCats(params) {
                 li.classList.add('nav-item')
                 li.onclick = () => {
                     window.location.href = `categoricalnews.html#${category._id}`
+                    // window.location.reload()
                 }
 
                 li.innerHTML = `
