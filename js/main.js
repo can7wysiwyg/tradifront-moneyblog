@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async() => {
                     li.classList.add('nav-item');
                     
                     li.onclick = () => {
-                        // Simply navigate to the categorical news page with the hash
+                        
                         window.location.href = `categoricalnews.html#${category._id}`;
                     };
 
