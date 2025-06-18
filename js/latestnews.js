@@ -1,7 +1,7 @@
 const latesto = document.getElementById('latest-stories')
 
 document.addEventListener('DOMContentLoaded', async() => {
-    const API_URL = "http://localhost:5000"
+    const API_URL = "https://nodeapi-moneyblog.onrender.com"
 
 
     try {

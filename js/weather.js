@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-  const API_URL = "http://localhost:5000";
+  const API_URL = "https://nodeapi-moneyblog.onrender.com";
   const weatherContainer = document.getElementById('weather-comp');
 
   async function getUserLocation() {

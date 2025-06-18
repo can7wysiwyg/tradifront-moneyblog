@@ -1,7 +1,7 @@
 const trendo = document.getElementById('trending-items')
 
 document.addEventListener('DOMContentLoaded', async() => {
-    const API_URL = "http://localhost:5000"
+    const API_URL = "https://nodeapi-moneyblog.onrender.com"
 
 
     try {

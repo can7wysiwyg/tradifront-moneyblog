@@ -6,7 +6,7 @@ const totalArticlesPerPage = categoriesPerPage * articlesPerCategory;
 let allArticles = [];
 let categories = [];
 let organizedByCategory = {};
- const API_URL = "http://localhost:5000";
+ const API_URL = "https://nodeapi-moneyblog.onrender.com";
 
 document.addEventListener("DOMContentLoaded", async () => {
    

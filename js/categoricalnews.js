@@ -1,5 +1,5 @@
 const ARTICLES_PER_LOAD = 8;
-const API_URL = "http://localhost:5000";
+const API_URL = "https://nodeapi-moneyblog.onrender.com";
 
 
 const subcategoryState = {};
