@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/main.css" />
+
+    <title>Money Blog</title>
+
+
+        <style>
+        :root {
+            --primary-red: #c41e3a;
+            --dark-gray: #2c3e50;
+            --light-gray: #ecf0f1;
+            --border-color: #bdc3c7;
+        }
+        
+        
+        
+ .game-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .game-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: var(--light-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .game-item:hover {
+            background: #fff;
+            border-color: var(--primary-red);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .game-item.active {
+            background: var(--primary-red);
+            color: white;
+            border-color: var(--primary-red);
+        }
+        
+        .game-week {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        
+        .game-info {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .main-content {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        .welcome-message {
+            text-align: center;
+            color: var(--dark-gray);
+            font-style: italic;
+            padding: 60px 20px;
+        }
+        
+        .game-display {
+            display: none;
+        }
+        
+        .game-display.active {
+            display: block;
+        }
+        
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .game-title {
+            color: var(--primary-red);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .difficulty-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .difficulty-tab {
+            padding: 10px 20px;
+            background: var(--light-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .difficulty-tab:hover {
+            background: #fff;
+            border-color: var(--primary-red);
+        }
+        
+        .difficulty-tab.active {
+            background: var(--primary-red);
+            color: white;
+            border-color: var(--primary-red);
+        }
+        
+        .game-content {
+            display: none;
+            text-align: center;
+        }
+        
+        .game-content.active {
+            display: block;
+        }
+        
+        .letters-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+        }
+        
+        .letter {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .letter:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .letter.center {
+            background: var(--primary-red);
+            color: white;
+            border-color: var(--primary-red);
+            transform: scale(1.2);
+        }
+        
+        .letter.center:hover {
+            transform: scale(1.3);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--dark-gray);
+        }
+        
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: var(--primary-red);
+            background: #ffe6ea;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .game-controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .timer {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--primary-red);
+            margin-bottom: 20px;
+        }
+        
+        .timer.warning {
+            color: #ff6b6b;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .word-input {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .word-input input {
+            padding: 12px 20px;
+            font-size: 1.2em;
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            font-family: "Georgia", serif;
+            width: 200px;
+        }
+        
+        .word-input input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+        }
+        
+        .word-input button {
+            padding: 12px 20px;
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: "Georgia", serif;
+            font-size: 1.1em;
+            transition: background 0.3s ease;
+        }
+        
+        .word-input button:hover {
+            background: #a01729;
+        }
+        
+        .word-input button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 20px;
+            background: var(--light-gray);
+            border-radius: 5px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--primary-red);
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: var(--dark-gray);
+        }
+        
+        .found-words {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .found-words h4 {
+            margin-top: 0;
+            color: var(--dark-gray);
+        }
+        
+        .word-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .found-word {
+            padding: 5px 10px;
+            background: var(--primary-red);
+            color: white;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+        
+        .message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .start-button {
+            padding: 15px 30px;
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: "Georgia", serif;
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        
+        .start-button:hover {
+            background: #a01729;
+        }
+
+    </style>
+
+
+
+</head>
+<body>
+     <header class="newspaper-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="newspaper-title mb-0">Money Blog</h1>
+                    <p class="newspaper-subtitle">"Truth in Every Story"</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="news-date">Monday, June 9, 2025</div>
+                    <div class="news-date">Daily Reporting</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul id="navitems" class="navbar-nav me-auto" style="cursor: pointer;">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    
+                </ul>
+                <div class="navbar-nav">
+                    <a class="nav-link" href="#search">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <a class="nav-link" href="#subscribe">
+                        <i class="fas fa-bell"></i>
+                    </a>
+                                    </div>
+            </div>
+        </div>
+    </nav>
+
+  <div class="container" style="margin-top: 25px;">
+        <div class="sidebar">
+            <h2>Spelling Bee Games</h2>
+            <div id="loading" class="loading">Loading games...</div>
+            <ul id="gameList" class="game-list" style="display: none;"></ul>
+            <div id="error" class="error" style="display: none;"></div>
+        </div>
+        
+        <div class="main-content">
+            <div id="welcomeMessage" class="welcome-message">
+                <h2>Welcome to Spelling Bee</h2>
+                <p>Select a game from the list to start playing!</p>
+            </div>
+            
+            <div id="gameDisplay" class="game-display">
+                <div class="game-header">
+                    <h1 id="gameTitle" class="game-title"></h1>
+                </div>
+                
+                <div class="difficulty-tabs">
+                    <div class="difficulty-tab" data-difficulty="easy">Easy</div>
+                    <div class="difficulty-tab" data-difficulty="medium">Medium</div>
+                    <div class="difficulty-tab" data-difficulty="hard">Hard</div>
+                </div>
+                
+                <div id="easyContent" class="game-content">
+                    <h3>Easy Level</h3>
+                    <div id="easyLetters" class="letters-container"></div>
+                    <div class="game-controls">
+                        <div id="easyTimer" class="timer">2:00</div>
+                        <button id="easyStartBtn" class="start-button">Start Game</button>
+                        <div id="easyWordInput" class="word-input" style="display: none;">
+                            <input type="text" id="easyWordField" placeholder="Enter word..." maxlength="20">
+                            <button id="easySubmitBtn">Submit</button>
+                        </div>
+                        <div id="easyMessage" class="message" style="display: none;"></div>
+                        <div id="easyStats" class="game-stats" style="display: none;">
+                            <div class="stat">
+                                <div id="easyWordsCount" class="stat-number">0</div>
+                                <div class="stat-label">Words Found</div>
+                            </div>
+                            <div class="stat">
+                                <div id="easyPointsCount" class="stat-number">0</div>
+                                <div class="stat-label">Points</div>
+                            </div>
+                        </div>
+                        <div id="easyFoundWords" class="found-words" style="display: none;">
+                            <h4>Found Words:</h4>
+                            <div id="easyWordList" class="word-list"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="mediumContent" class="game-content">
+                    <h3>Medium Level</h3>
+                    <div id="mediumLetters" class="letters-container"></div>
+                    <div class="game-controls">
+                        <div id="mediumTimer" class="timer">2:00</div>
+                        <button id="mediumStartBtn" class="start-button">Start Game</button>
+                        <div id="mediumWordInput" class="word-input" style="display: none;">
+                            <input type="text" id="mediumWordField" placeholder="Enter word..." maxlength="20">
+                            <button id="mediumSubmitBtn">Submit</button>
+                        </div>
+                        <div id="mediumMessage" class="message" style="display: none;"></div>
+                        <div id="mediumStats" class="game-stats" style="display: none;">
+                            <div class="stat">
+                                <div id="mediumWordsCount" class="stat-number">0</div>
+                                <div class="stat-label">Words Found</div>
+                            </div>
+                            <div class="stat">
+                                <div id="mediumPointsCount" class="stat-number">0</div>
+                                <div class="stat-label">Points</div>
+                            </div>
+                        </div>
+                        <div id="mediumFoundWords" class="found-words" style="display: none;">
+                            <h4>Found Words:</h4>
+                            <div id="mediumWordList" class="word-list"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="hardContent" class="game-content">
+                    <h3>Hard Level</h3>
+                    <div id="hardLetters" class="letters-container"></div>
+                    <div class="game-controls">
+                        <div id="hardTimer" class="timer">2:00</div>
+                        <button id="hardStartBtn" class="start-button">Start Game</button>
+                        <div id="hardWordInput" class="word-input" style="display: none;">
+                            <input type="text" id="hardWordField" placeholder="Enter word..." maxlength="20">
+                            <button id="hardSubmitBtn">Submit</button>
+                        </div>
+                        <div id="hardMessage" class="message" style="display: none;"></div>
+                        <div id="hardStats" class="game-stats" style="display: none;">
+                            <div class="stat">
+                                <div id="hardWordsCount" class="stat-number">0</div>
+                                <div class="stat-label">Words Found</div>
+                            </div>
+                            <div class="stat">
+                                <div id="hardPointsCount" class="stat-number">0</div>
+                                <div class="stat-label">Points</div>
+                            </div>
+                        </div>
+                        <div id="hardFoundWords" class="found-words" style="display: none;">
+                            <h4>Found Words:</h4>
+                            <div id="hardWordList" class="word-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>The Money Blog</h5>
+                    <p>Established 1952 • Trusted journalism for over 70 years</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <p class="mt-2">© 2025 The Money Blog. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/main.js" ></script>
+
+        <script src="./js/spellingbee.js"> </script>
+    
+</body>
+</html>
