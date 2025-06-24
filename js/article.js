@@ -80,7 +80,8 @@
                         <article class="article-content">
                             ${article.photo ? `<img src="${article.photo}" alt="${escapeHtml(article.title)}" class="article-image">` : ''}
                             <div class="article-text">
-                                ${formatContent(article.content)}
+                                
+                                ${article.content ? article.content.substring(0, 200) + (article.content.length > 200 ? '...' : '') : 'No content'}
                             </div>
                         </article>
                         
