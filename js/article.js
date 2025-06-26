@@ -56,6 +56,8 @@
 
             }, 600)
 
+            console.log(article.content)
+
             const html = `
                 <!-- Article Header -->
                 <div class="article-header">
@@ -79,9 +81,10 @@
                     <div class="main-content">
                         <article class="article-content">
                             ${article.photo ? `<img src="${article.photo}" alt="${escapeHtml(article.title)}" class="article-image">` : ''}
-                            <div class="article-text">
+                            <div class="blog-content" >
+
+                                 ${article.content} 
                                 
-                                ${article.content ? article.content.substring(0, 200) + (article.content.length > 200 ? '...' : '') : 'No content'}
                             </div>
                         </article>
                         
