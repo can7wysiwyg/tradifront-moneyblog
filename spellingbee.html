@@ -398,105 +398,115 @@
                 <h2>Welcome to Spelling Bee</h2>
                 <p>Select a game from the list to start playing!</p>
             </div>
-            
-            <div id="gameDisplay" class="game-display">
-                <div class="game-header">
-                    <h1 id="gameTitle" class="game-title"></h1>
+            <!-- games -->
+   <div id="gameDisplay" class="game-display">
+    <div class="game-header">
+        <h1 id="gameTitle" class="game-title"></h1>
+    </div>
+    
+    <div class="difficulty-tabs">
+        <div class="difficulty-tab" data-difficulty="easy">Easy</div>
+        <div class="difficulty-tab" data-difficulty="medium">Medium</div>
+        <div class="difficulty-tab" data-difficulty="difficult">Difficult</div>
+    </div>
+    
+    <div id="easyContent" class="game-content">
+        <h3>Easy Level</h3>
+        <div id="easyLetters" class="letters-container"></div>
+        <div class="game-controls">
+            <div id="easyTimer" class="timer">2:00</div>
+            <button id="easyStartBtn" class="start-button">Start Game</button>
+            <div id="easyWordInput" class="word-input" style="display: none;">
+                <input type="text" id="easyWordField" placeholder="Enter word..." maxlength="20">
+                <button id="easySubmitBtn">Submit</button>
+            </div>
+            <div id="easyMessage" class="message" style="display: none;"></div>
+            <div id="easyStats" class="game-stats" style="display: none;">
+                <div class="stat">
+                    <div id="easyWordsCount" class="stat-number">0</div>
+                    <div class="stat-label">Words Found</div>
                 </div>
-                
-                <div class="difficulty-tabs">
-                    <div class="difficulty-tab" data-difficulty="easy">Easy</div>
-                    <div class="difficulty-tab" data-difficulty="medium">Medium</div>
-                    <div class="difficulty-tab" data-difficulty="hard">Hard</div>
+                <div class="stat">
+                    <div id="easyPointsCount" class="stat-number">0</div>
+                    <div class="stat-label">Points</div>
                 </div>
-                
-                <div id="easyContent" class="game-content">
-                    <h3>Easy Level</h3>
-                    <div id="easyLetters" class="letters-container"></div>
-                    <div class="game-controls">
-                        <div id="easyTimer" class="timer">2:00</div>
-                        <button id="easyStartBtn" class="start-button">Start Game</button>
-                        <div id="easyWordInput" class="word-input" style="display: none;">
-                            <input type="text" id="easyWordField" placeholder="Enter word..." maxlength="20">
-                            <button id="easySubmitBtn">Submit</button>
-                        </div>
-                        <div id="easyMessage" class="message" style="display: none;"></div>
-                        <div id="easyStats" class="game-stats" style="display: none;">
-                            <div class="stat">
-                                <div id="easyWordsCount" class="stat-number">0</div>
-                                <div class="stat-label">Words Found</div>
-                            </div>
-                            <div class="stat">
-                                <div id="easyPointsCount" class="stat-number">0</div>
-                                <div class="stat-label">Points</div>
-                            </div>
-                        </div>
-                        <div id="easyFoundWords" class="found-words" style="display: none;">
-                            <h4>Found Words:</h4>
-                            <div id="easyWordList" class="word-list"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="mediumContent" class="game-content">
-                    <h3>Medium Level</h3>
-                    <div id="mediumLetters" class="letters-container"></div>
-                    <div class="game-controls">
-                        <div id="mediumTimer" class="timer">2:00</div>
-                        <button id="mediumStartBtn" class="start-button">Start Game</button>
-                        <div id="mediumWordInput" class="word-input" style="display: none;">
-                            <input type="text" id="mediumWordField" placeholder="Enter word..." maxlength="20">
-                            <button id="mediumSubmitBtn">Submit</button>
-                        </div>
-                        <div id="mediumMessage" class="message" style="display: none;"></div>
-                        <div id="mediumStats" class="game-stats" style="display: none;">
-                            <div class="stat">
-                                <div id="mediumWordsCount" class="stat-number">0</div>
-                                <div class="stat-label">Words Found</div>
-                            </div>
-                            <div class="stat">
-                                <div id="mediumPointsCount" class="stat-number">0</div>
-                                <div class="stat-label">Points</div>
-                            </div>
-                        </div>
-                        <div id="mediumFoundWords" class="found-words" style="display: none;">
-                            <h4>Found Words:</h4>
-                            <div id="mediumWordList" class="word-list"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="hardContent" class="game-content">
-                    <h3>Hard Level</h3>
-                    <div id="hardLetters" class="letters-container"></div>
-                    <div class="game-controls">
-                        <div id="hardTimer" class="timer">2:00</div>
-                        <button id="hardStartBtn" class="start-button">Start Game</button>
-                        <div id="hardWordInput" class="word-input" style="display: none;">
-                            <input type="text" id="hardWordField" placeholder="Enter word..." maxlength="20">
-                            <button id="hardSubmitBtn">Submit</button>
-                        </div>
-                        <div id="hardMessage" class="message" style="display: none;"></div>
-                        <div id="hardStats" class="game-stats" style="display: none;">
-                            <div class="stat">
-                                <div id="hardWordsCount" class="stat-number">0</div>
-                                <div class="stat-label">Words Found</div>
-                            </div>
-                            <div class="stat">
-                                <div id="hardPointsCount" class="stat-number">0</div>
-                                <div class="stat-label">Points</div>
-                            </div>
-                        </div>
-                        <div id="hardFoundWords" class="found-words" style="display: none;">
-                            <h4>Found Words:</h4>
-                            <div id="hardWordList" class="word-list"></div>
-                        </div>
-                    </div>
-                </div>
+            </div>
+            <div id="easyFoundWords" class="found-words" style="display: none;">
+                <h4>Found Words:</h4>
+                <div id="easyWordList" class="word-list"></div>
             </div>
         </div>
     </div>
+    
+    <div id="mediumContent" class="game-content">
+        <h3>Medium Level</h3>
+        <div id="mediumLetters" class="letters-container"></div>
+        <div class="game-controls">
+            <div id="mediumTimer" class="timer">2:00</div>
+            <button id="mediumStartBtn" class="start-button">Start Game</button>
+            <div id="mediumWordInput" class="word-input" style="display: none;">
+                <input type="text" id="mediumWordField" placeholder="Enter word..." maxlength="20">
+                <button id="mediumSubmitBtn">Submit</button>
+            </div>
+            <div id="mediumMessage" class="message" style="display: none;"></div>
+            <div id="mediumStats" class="game-stats" style="display: none;">
+                <div class="stat">
+                    <div id="mediumWordsCount" class="stat-number">0</div>
+                    <div class="stat-label">Words Found</div>
+                </div>
+                <div class="stat">
+                    <div id="mediumPointsCount" class="stat-number">0</div>
+                    <div class="stat-label">Points</div>
+                </div>
+            </div>
+            <div id="mediumFoundWords" class="found-words" style="display: none;">
+                <h4>Found Words:</h4>
+                <div id="mediumWordList" class="word-list"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="difficultContent" class="game-content">
+        <h3>Difficult Level</h3>
+        <div id="difficultLetters" class="letters-container"></div>
+        <div class="game-controls">
+            <div id="difficultTimer" class="timer">2:00</div>
+            <button id="difficultStartBtn" class="start-button">Start Game</button>
+            <div id="difficultWordInput" class="word-input" style="display: none;">
+                <input type="text" id="difficultWordField" placeholder="Enter word..." maxlength="20">
+                <button id="difficultSubmitBtn">Submit</button>
+            </div>
+            <div id="difficultMessage" class="message" style="display: none;"></div>
+            <div id="difficultStats" class="game-stats" style="display: none;">
+                <div class="stat">
+                    <div id="difficultWordsCount" class="stat-number">0</div>
+                    <div class="stat-label">Words Found</div>
+                </div>
+                <div class="stat">
+                    <div id="difficultPointsCount" class="stat-number">0</div>
+                    <div class="stat-label">Points</div>
+                </div>
+            </div>
+            <div id="difficultFoundWords" class="found-words" style="display: none;">
+                <h4>Found Words:</h4>
+                <div id="difficultWordList" class="word-list"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+
+
+            <!-- end -->
+
+
+
+            </div>
+            </div>
+        
+            
+           
 
     <!-- Footer -->
     <footer class="footer">

@@ -5,7 +5,7 @@ let gameTimers = {};
 let gameState = {
     easy: { words: [], points: 0, centerLetter: '', availableLetters: [] },
     medium: { words: [], points: 0, centerLetter: '', availableLetters: [] },
-    hard: { words: [], points: 0, centerLetter: '', availableLetters: [] }
+    difficult: { words: [], points: 0, centerLetter: '', availableLetters: [] }
 };
 
 // DOM elements
@@ -40,6 +40,10 @@ async function loadAllGames() {
         }
         
         const data = await response.json();
+
+
+
+    
         allGames = data.games || [];
         
         displayGameList();
@@ -117,7 +121,7 @@ function displayGame(gameResponse) {
     gameTitleEl.textContent = gameResponse.week;
     
     // Populate difficulty levels
-    const difficulties = ['easy', 'medium', 'hard'];
+    const difficulties = ['easy', 'medium', 'difficult'];
     difficulties.forEach(difficulty => {
         const gameLevel = gameResponse.game[difficulty];
         if (gameLevel) {
@@ -243,7 +247,7 @@ function setupEventListeners() {
     });
 
     // Game controls for each difficulty
-    const difficulties = ['easy', 'medium', 'hard'];
+    const difficulties = ['easy', 'medium', 'difficult'];
     difficulties.forEach(difficulty => {
         // Start button
         const startBtn = document.getElementById(`${difficulty}StartBtn`);
