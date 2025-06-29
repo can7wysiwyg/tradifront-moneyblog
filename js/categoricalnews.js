@@ -26,7 +26,7 @@ async function fetchCategoryArticles(catId) {
         }
         
         const data = await response.json();
-        console.log(data);
+        
         
         renderCategoryPage(data, mainContent);
         
@@ -39,7 +39,7 @@ async function fetchCategoryArticles(catId) {
 // Set up hashchange listener
 window.addEventListener('hashchange', () => {
     const catId = window.location.hash.substring(1); // remove the '#'
-    console.log('Hash changed to:', catId);
+    
     if (catId) {
         fetchCategoryArticles(catId);
     }

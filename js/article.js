@@ -24,7 +24,7 @@
                 }
 
                 const data = await response.json();
-                console.log("The article data:", data);
+                
 
                 if(!data.success) {
                     throw new Error(data.msg || 'Failed to load article');
@@ -56,7 +56,7 @@
 
             }, 600)
 
-            console.log(article.content)
+        
 
             const html = `
                 <!-- Article Header -->
