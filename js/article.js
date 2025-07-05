@@ -131,6 +131,32 @@
                             <span>WhatsApp</span>
                         </a>
                         
+                                            <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="share-btn linkedin-btn">
+                            <i class="bi bi-linkedin"></i>
+                            <span>LinkedIn</span>
+                        </a>
+
+                        <a href="https://www.reddit.com/submit?url=${encodeURIComponent(window.location.href)}" 
+   target="_blank" 
+   rel="noopener noreferrer" 
+   class="share-btn reddit-btn">
+    <i class="bi bi-reddit"></i>
+    <span>Reddit</span>
+</a>
+
+
+<a href="https://pinterest.com/pin/create/button/?url=${encodeURIComponent(window.location.href)}&media=${encodeURIComponent(article.photo)}&description=${encodeURIComponent(article.title)}" 
+   target="_blank" 
+   rel="noopener noreferrer" 
+   class="share-btn pinterest-btn">
+    <i class="bi bi-pinterest"></i>
+    <span>Pinterest</span>
+</a>
+
+
                         
                     </div>
                 </div>
