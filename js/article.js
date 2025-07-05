@@ -4,7 +4,8 @@
             const loading = document.getElementById('loading');
             
             const articleIdFromUrl = window.location.hash.substring(1);
-            
+           const articleUrl = window.location.href 
+
             if(!articleIdFromUrl) {
                 main.innerHTML = '<div class="error">No article ID provided in URL</div>';
                 return;
@@ -46,7 +47,7 @@
             const { article, relatedArticles, categoryArticles } = data;
             const main = document.getElementById('main');
 
-            // console.log("Rendering article", article.catId._id)
+            
 
             setTimeout(() => {
                  localStorage.setItem("catId", article.catId._id);
@@ -87,11 +88,57 @@
                                 
                             </div>
                         </article>
+
+                        
                         
                         <aside class="sidebar">
                             <!-- Could add sidebar content here in the future -->
                         </aside>
                     </div>
+                </div>
+
+                <div class="share-section">
+             <i class="bi bi-share-fill me-2"></i>   <h2> Share Article </h2>
+                <hr class="my-4">
+                            <div class="container">
+                <div class="share-container">
+                    <div class="share-header">
+                        <i class="bi bi-share-fill share-icon"></i>
+                        <h3 class="share-title">Share This Article</h3>
+                    </div>
+                    <div class="share-buttons">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="share-btn facebook-btn">
+                            <i class="bi bi-facebook"></i>
+                            <span>Facebook</span>
+                        </a>
+                        
+                        <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(article.title)}" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="share-btn twitter-btn">
+                            <i class="bi bi-twitter-x"></i>
+                            <span>X</span>
+                        </a>
+                        
+                        <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(article.title + ' - ' + window.location.href)}" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="share-btn whatsapp-btn">
+                            <i class="bi bi-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+
+
+              
+
                 </div>
 
                 <!-- Related Articles -->
@@ -117,6 +164,8 @@
                     </div>
                 </section>
                 ` : ''}
+
+                
             `;
 
             main.innerHTML = html;

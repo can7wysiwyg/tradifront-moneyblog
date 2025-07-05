@@ -41,6 +41,121 @@
             padding: 0 20px;
         }
 
+        /*  */
+            
+            .share-section {
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                padding: 3rem 0;
+                margin: 3rem 0;
+                border-radius: 15px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            }
+
+            .share-container {
+                max-width: 600px;
+                margin: 0 auto;
+                text-align: center;
+            }
+
+            .share-header {
+                margin-bottom: 2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            .share-icon {
+                font-size: 1.5rem;
+                color: #6c757d;
+            }
+
+            .share-title {
+                font-size: 1.5rem;
+                font-weight: 600;
+                color: #343a40;
+                margin: 0;
+            }
+
+            .share-buttons {
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .share-btn {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.8rem 1.5rem;
+                border: none;
+                border-radius: 50px;
+                text-decoration: none;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                background: white;
+                color: #495057;
+                min-width: 120px;
+                justify-content: center;
+            }
+
+            .share-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+                text-decoration: none;
+            }
+
+            .facebook-btn:hover {
+                background: #1877f2;
+                color: white;
+            }
+
+            .twitter-btn:hover {
+                background: #1da1f2;
+                color: white;
+            }
+
+            .whatsapp-btn:hover {
+                background: #25d366;
+                color: white;
+            }
+
+            .linkedin-btn:hover {
+                background: #0077b5;
+                color: white;
+            }
+
+            .copy-btn {
+                cursor: pointer;
+            }
+
+            .copy-btn:hover {
+                background: #6c757d;
+                color: white;
+            }
+
+            .copy-btn.copied {
+                background: #28a745;
+                color: white;
+            }
+
+            .share-btn i {
+                font-size: 1.2rem;
+            }
+
+            @media (max-width: 768px) {
+                .share-buttons {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                
+                .share-btn {
+                    width: 200px;
+                }
+            }
+
 
     </style>
 </head>
