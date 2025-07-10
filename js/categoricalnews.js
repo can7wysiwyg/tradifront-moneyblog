@@ -48,7 +48,7 @@ window.addEventListener('hashchange', () => {
 // Handle initial page load
 document.addEventListener('DOMContentLoaded', async () => {
     const catIdFromUrl = window.location.hash.substring(1);
-    console.log('Page loaded with hash:', catIdFromUrl);
+
     
     if (catIdFromUrl) {
         fetchCategoryArticles(catIdFromUrl);
