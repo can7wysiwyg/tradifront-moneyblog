@@ -6,13 +6,10 @@ const totalArticlesPerPage = categoriesPerPage * articlesPerCategory;
 let allArticles = [];
 let categories = [];
 let organizedByCategory = {};
- const API_URL = "https://nodeapi-moneyblog.onrender.com";
+ const API_URL = "http://localhost:5000";
 
 document.addEventListener("DOMContentLoaded", async () => {
    
-    const catId = localStorage.getItem("catId");
-    const subCatId = localStorage.getItem("subCatId");
-    const keywordParams = JSON.parse(localStorage.getItem("keyword"));
     
     const loading = document.getElementById("loading");
     const error = document.getElementById("error");
@@ -37,29 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         let articles = [];
         let isSecondVisit = false;
         
-        if (catId && subCatId && keywordParams) {
-            isSecondVisit = true;
-            const keyword = keywordParams
-                .map((k) => `keyword=${encodeURIComponent(k)}`)
-                .join("&");
-            
-            const secondVisitArticles = await fetch(
-                `${API_URL}/public/articles-by-clicked?catId=${catId}&subCatId=${subCatId}&${keyword}`,
-                { method: "GET", headers: { "Content-Type": "application/json" } }
-            );
-            
-            if (!secondVisitArticles.ok) {
-                throw new Error("Failed to fetch second visit articles");
-            }
-            
-            const secondVisitArticlesData = await secondVisitArticles.json();
-            const allSecondVisitArticles = secondVisitArticlesData.articles || [];
-            
-            // Articles are already shuffled from backend, no need to shuffle again
-            articles = allSecondVisitArticles;
-            
-        } else {
-            const firstVisitArticles = await fetch(`${API_URL}/public/show-articles`, {
+               const firstVisitArticles = await fetch(`${API_URL}/public/show-articles`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" }
             });
@@ -73,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             
             // Articles are already shuffled from backend, no need to shuffle again
             articles = allFirstVisitArticles;
-        }
+        
         
         if (articles.length === 0) {
             throw new Error("No articles found");
@@ -106,16 +81,14 @@ function organizeArticlesByCategory(articles) {
         organizedSections[categoryName].push(article);
     });
     
-    // Articles within each category are already mixed from the backend shuffle
-    // But we can add an additional shuffle per category if needed for more randomness
-    Object.keys(organizedSections).forEach(category => {
-        // Optional: Add local shuffle for each category
-        // organizedSections[category] = shuffleArray(organizedSections[category]);
-        // For now, keeping the backend shuffle order
-    });
     
-    return organizedSections;
-}
+     Object.keys(organizedSections).forEach(category => {
+//         // organizedSections[category] = shuffleArray(organizedSections[category]);
+//         // For now, keeping the backend shuffle order
+
+});
+         return organizedSections;
+ }
 
 function getPageData(pageNumber) {
     const categoryNames = Object.keys(organizedByCategory);
@@ -164,7 +137,7 @@ function populateArticlesWithPagination() {
     
     if (heroArticle) {
         populateHeroArticle(heroArticle);
-        // Remove hero article from categories to avoid duplication
+        
         Object.keys(pageCategories).forEach(categoryName => {
             pageCategories[categoryName] = pageCategories[categoryName].filter(
                 article => article._id !== heroArticle._id
@@ -172,8 +145,6 @@ function populateArticlesWithPagination() {
         });
     }
     
-    // Removed the fallback populateLeadStory logic
-    // If no hero article is found, all articles will just appear in the grid
     
     populateArticlesGrid(pageCategories);
     updatePaginationControls(totalPages);
@@ -259,10 +230,15 @@ function getCategoryName(catId) {
     return category ? category.category : "News";
 }
 
+
+
+
+
+
 function populateHeroArticle(article) {
     const heroSection = document.getElementById("hero-article");
     const heroTitle = document.getElementById("hero-title");
-    const heroExcerpt = document.getElementById("hero-excerpt");
+    // const heroExcerpt = document.getElementById("hero-excerpt");
     const heroTime = document.getElementById("hero-time");
     const heroViews = document.getElementById("hero-views");
     
@@ -274,7 +250,7 @@ function populateHeroArticle(article) {
     }
     
     heroTitle.textContent = article.title;
-    heroExcerpt.textContent = truncateText(article.content, 200);
+//   heroExcerpt.textContent =  truncateText(article.content, 200);
     heroTime.textContent = formatTime(article.createdAt);
     heroViews.textContent = article.articleClicks || 0;
     
@@ -321,7 +297,7 @@ function createSectionHtml(title, articles) {
                         
                         <div class="story-meta">
                             <span><i class="fas fa-clock"></i> ${formatTime(article.createdAt)}</span>
-                            <span><i class="fas fa-eye"></i> ${article.articleClicks || 0} views</span>
+                            
                         </div>
 
                         </div>
@@ -399,3 +375,5 @@ function formatTime(dateString) {
     
     return date.toLocaleDateString();
 }
+
+
